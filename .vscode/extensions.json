@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools-themes",
+        "ms-vscode.cpptools",
+        "github.vscode-github-actions",
+        "eamodio.gitlens",
+        "ms-vscode.makefile-tools",
+        "esbenp.prettier-vscode"
+    ]
+}

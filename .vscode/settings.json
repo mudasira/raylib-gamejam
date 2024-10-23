@@ -1,3 +1,12 @@
 {
-    "makefile.makefilePath": "${workspaceFolder}/src"
+    "makefile.makefilePath": "${workspaceFolder}/src",
+    "makefile.makePath": "make",
+    "makefile.makeDirectory": "${workspaceFolder}/src",
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "${workspaceFolder}\\src",
+            "binaryPath": "${workspaceFolder}\\src\\raylib_game",
+            "binaryArgs": []
+        }
+    ]
 }
