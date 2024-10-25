@@ -38,6 +38,8 @@ This template has been created to be used with raylib (www.raylib.com) and it's 
 
 _Copyright (c) 2022-2024 Ramon Santamaria ([@raysan5](https://twitter.com/raysan5))_
 
+Also install w64devkit and and at its bin folder to Path environment variable
+
 -----------------------------------
 
 ## $(Game Title)
