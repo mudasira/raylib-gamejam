@@ -113,10 +113,10 @@ endif
 
 # Compiler flags for arquitecture
 ifeq ($(ANDROID_ARCH),ARM)
-    CFLAGS = -std=c99 -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
+    CFLAGS = -std=c++17 -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
 endif
 ifeq ($(ANDROID_ARCH),ARM64)
-    CFLAGS = -std=c99 -march=armv8-a -mfix-cortex-a53-835769
+    CFLAGS = -std=c++17 -march=armv8-a -mfix-cortex-a53-835769
 endif
 # Compilation functions attributes options
 CFLAGS += -ffunction-sections -funwind-tables -fstack-protector-strong -fPIC
