@@ -25,6 +25,7 @@
 #include "Grid.h"
 #include "Game.h"
 #include "Block.h"
+#include "Water.h"
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -174,17 +175,7 @@ void UpdateDrawFrame(void)
 
 
 
-    class Water : public Block
-    {
-    public:
-        Water(int x, int y, int size) : Block(x, y, size, BLUE) {}
 
-        void Draw() override
-        {
-            Block::Draw();
-            // Additional drawing logic for Water if needed
-        }
-    };
 
     class Obstacle : public Block
     {
