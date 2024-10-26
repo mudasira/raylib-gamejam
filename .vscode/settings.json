@@ -9,4 +9,6 @@
             "binaryArgs": []
         }
     ]
+    ,
+    "editor.renderWhitespace": "all"
 }
