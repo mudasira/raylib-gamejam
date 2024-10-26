@@ -26,6 +26,7 @@
 #include "Game.h"
 #include "Block.h"
 #include "Water.h"
+#include "Obstacle.h"
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -177,17 +178,7 @@ void UpdateDrawFrame(void)
 
 
 
-    class Obstacle : public Block
-    {
-    public:
-        Obstacle(int x, int y, int size) : Block(x, y, size, GRAY) {}
 
-        void Draw() override
-        {
-            Block::Draw();
-            // Additional drawing logic for Obstacle if needed
-        }
-    };
 
     // Example usage
     Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
