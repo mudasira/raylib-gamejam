@@ -356,7 +356,7 @@ $(PROJECT_NAME): $(OBJS)
 clean:
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),WINDOWS)
-		del *.o *.exe /s
+		rm -f *.o *.exe
     endif
     ifeq ($(PLATFORM_OS),LINUX)
 		find . -type f -executable -delete
