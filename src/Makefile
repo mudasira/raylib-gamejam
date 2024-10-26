@@ -108,15 +108,18 @@ endif
 # Define default C compiler: CC
 #------------------------------------------------------------------------------------------------
 CC = gcc
+CXX = g++
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
         # OSX default compiler
         CC = clang
+        CXX = clang++
     endif
     ifeq ($(PLATFORM_OS),BSD)
         # FreeBSD, OpenBSD, NetBSD, DragonFly default compiler
         CC = clang
+        CXX = clang++
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
@@ -124,12 +127,14 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
     # WARNING: To compile to HTML5, code must be redesigned
     # to use emscripten.h and emscripten_set_main_loop()
     CC = emcc
+    CXX = em++
 endif
 ifeq ($(PLATFORM),PLATFORM_DRM)
     ifeq ($(USE_RPI_CROSS_COMPILER),TRUE)
         # Define RPI cross-compiler
         #CC = armv6j-hardfloat-linux-gnueabi-gcc
         CC = $(RPI_TOOLCHAIN)/bin/arm-linux-gnueabihf-gcc
+        CXX = $(RPI_TOOLCHAIN)/bin/arm-linux-gnueabihf-g++
     endif
 endif
 
@@ -157,27 +162,34 @@ endif
 #  -D_DEFAULT_SOURCE    use with -std=c99 on Linux and PLATFORM_WEB, required for timespec
 # CFLAGS = -std=c++17 -Wall -Wno-missing-braces -Wno-unused-value -Wno-pointer-sign -D_DEFAULT_SOURCE $(PROJECT_CUSTOM_FLAGS)
 #CFLAGS += -Wextra -Wmissing-prototypes -Wstrict-prototypes
-CFLAGS = -std=c++17 -Wall -Wno-missing-braces -Wno-unused-value -D_DEFAULT_SOURCE $(PROJECT_CUSTOM_FLAGS)
+CFLAGS = -std=c99 -Wall -Wno-missing-braces -Wno-unused-value -D_DEFAULT_SOURCE $(PROJECT_CUSTOM_FLAGS)
+CXXFLAGS = -std=c++17 -Wall -Wno-missing-braces -Wno-unused-value -D_DEFAULT_SOURCE $(PROJECT_CUSTOM_FLAGS)
 
 ifeq ($(BUILD_MODE),DEBUG)
     CFLAGS += -g -D_DEBUG
+    CXXFLAGS += -g -D_DEBUG
 else
     ifeq ($(PLATFORM),PLATFORM_WEB)
         ifeq ($(BUILD_WEB_ASYNCIFY),TRUE)
             CFLAGS += -O3
+            CXXFLAGS += -O3
         else
             CFLAGS += -Os
+            CXXFLAGS += -Os
         endif
     else
         ifeq ($(PLATFORM_OS),OSX)
             CFLAGS += -O2
+            CXXFLAGS += -O2
         else
             CFLAGS += -s -O2
+            CXXFLAGS += -s -O2
         endif
     endif
 endif
 ifeq ($(PLATFORM),PLATFORM_DRM)
     CFLAGS += -std=gnu99 -DEGL_NO_X11
+    CXXFLAGS += -std=c++17 -DEGL_NO_X11
 endif
 
 # Define include paths for required headers: INCLUDE_PATHS
@@ -313,7 +325,7 @@ endif
 
 # Define all object files from source files
 #------------------------------------------------------------------------------------------------
-OBJS = $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
+OBJS = $(patsubst %.cpp, %.o, $(PROJECT_SOURCE_FILES))
 
 # Define processes to execute
 #------------------------------------------------------------------------------------------------
@@ -333,12 +345,12 @@ all:
 
 # Project target defined by PROJECT_NAME
 $(PROJECT_NAME): $(OBJS)
-	$(CC) -o $(PROJECT_BUILD_PATH)/$(PROJECT_NAME)$(EXT) $(OBJS) $(CFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
+	$(CXX) -o $(PROJECT_BUILD_PATH)/$(PROJECT_NAME)$(EXT) $(OBJS) $(CXXFLAGS) $(INCLUDE_PATHS) $(LDFLAGS) $(LDLIBS) -D$(PLATFORM)
 
 # Compile source files
 # NOTE: This pattern will compile every module defined on $(OBJS)
-%.o: %.c
-	$(CC) -c $< -o $@ $(CFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
+%.o: %.cpp
+	$(CXX) -c $< -o $@ $(CXXFLAGS) $(INCLUDE_PATHS) -D$(PLATFORM)
 
 # Clean everything
 clean:
