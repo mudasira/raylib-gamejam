@@ -24,6 +24,7 @@
 
 #include "Grid.h"
 #include "Game.h"
+#include "Block.h"
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -171,20 +172,7 @@ void UpdateDrawFrame(void)
         DrawText(text, startX + col * grid.cellSize + 5, startY + row * grid.cellSize + 5, 20, BLACK);
     }
 
-    class Block
-    {
-    public:
-        int x, y;
-        int size;
-        Color color;
 
-        Block(int x, int y, int size, Color color) : x(x), y(y), size(size), color(color) {}
-
-        virtual void Draw()
-        {
-            DrawRectangle(x, y, size, size, color);
-        }
-    };
 
     class Water : public Block
     {
