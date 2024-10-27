@@ -5,16 +5,32 @@
 #include <vector>
 #include <iostream>
 #include <string>
+#include <memory>
+#include "Block.h"
 
-    class Grid
-    {
-    public:
-        int rows;
-        int cols;
-        int cellSize;
+class Grid;
 
-        Grid(int r = 10, int c = 10, int size = 40) : rows(r), cols(c), cellSize(size) {}
-        void Draw();
-    };
+class Cell
+{
+public:
+    const Grid &grid;
+    const int x, y;
+    std::shared_ptr<Block> block;
+};
+
+class Grid
+{
+public:
+    int rows;
+    int cols;
+    int cellSize;
+    std::vector<std::vector<Cell>> grid;
+
+    Grid(int r = 10, int c = 10, int size = 40);
+    std::shared_ptr<Block> GetBlock(int x, int y);
+    void SetBlock(std::shared_ptr<Block> block);
+
+    void Draw();
+};
 
 #endif
