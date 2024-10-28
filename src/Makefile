@@ -32,7 +32,7 @@ PLATFORM              ?= PLATFORM_DESKTOP
 PROJECT_NAME          ?= raylib_game
 PROJECT_VERSION       ?= 1.0
 PROJECT_BUILD_PATH    ?= .
-PROJECT_SOURCE_FILES  ?= raylib_game.cpp Block.cpp Grid.cpp Obstacle.cpp Water.cpp
+PROJECT_SOURCE_FILES  ?= raylib_game.cpp Block.cpp Grid.cpp Obstacle.cpp Crowd.cpp
 
 # raylib library variables
 RAYLIB_SRC_PATH       ?= C:/Dev/CPlusPlus/raylib/src
@@ -46,7 +46,7 @@ RAYLIB_LIBTYPE        ?= STATIC
 COMPILER_PATH         ?= C:\w64devkit\bin
 
 # Build mode for project: DEBUG or RELEASE
-BUILD_MODE            ?= RELEASE
+BUILD_MODE            ?= DEBUG
 
 # PLATFORM_WEB: Default properties
 BUILD_WEB_ASYNCIFY    ?= FALSE
