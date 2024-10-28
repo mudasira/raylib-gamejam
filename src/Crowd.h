@@ -20,7 +20,7 @@ class Person
 class Crowd : public Block
 {
 public:
-    std::vector<Person>
+    std::vector<Person> people;
 
     Crowd(int x, int y, int size) : Block(x, y, size, BLUE) {}
 
