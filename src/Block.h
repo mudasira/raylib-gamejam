@@ -16,6 +16,7 @@ public:
     Color color;
     // std::vector<std::shared_ptr<Cell>> cells;
 
+    virtual ~Block() = default;
     Block(int x, int y, int size, Color color) : x(x), y(y), size(size), color(color) {}
 
     virtual void Draw()

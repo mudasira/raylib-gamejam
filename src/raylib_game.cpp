@@ -211,10 +211,11 @@ void UpdateDrawFrame(void)
 
 
     // // Example usage
-    // Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
+    Crowd crowd(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
+    crowd.setup();
     // Obstacle obstacleBlock(startX + 4 * grid.cellSize, startY + 5 * grid.cellSize, grid.cellSize);
 
-    // waterBlock.Draw();
+    crowd.Draw();
     // obstacleBlock.Draw();
 
     EndDrawing();
