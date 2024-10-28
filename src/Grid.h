@@ -7,16 +7,9 @@
 #include <string>
 #include <memory>
 #include "Block.h"
+#include "Cell.h"
 
-class Grid;
 
-class Cell
-{
-public:
-    const Grid &grid;
-    const int x, y;
-    std::shared_ptr<Block> block;
-};
 
 class Grid
 {

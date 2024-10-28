@@ -139,9 +139,14 @@ void UpdateDrawFrame(void)
             const int col = (mouseX - startX) / grid.cellSize;
             const int row = (mouseY - startY) / grid.cellSize;
 
+            if (!grid.GetBlock(col, row))
+            {
+                // Place water block
+                auto block = std::make_shared<Water>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize);
+                grid.SetBlock(col, row, block);
+                
+            }
 
-            // Place water block
-            grid.SetBlock(col, row, std::make_shared<Water>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize));
         }
     }
 
