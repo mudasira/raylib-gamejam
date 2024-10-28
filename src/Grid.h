@@ -23,6 +23,7 @@ public:
 
     Grid(int r = 10, int c = 10, int size = 40);
     std::shared_ptr<Block> GetBlock(int x, int y);
+    void ClearBlock(int x, int y);
     void SetBlock(int x, int y, std::shared_ptr<Block> block);
 
     void Draw();

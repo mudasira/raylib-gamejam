@@ -1,6 +1,7 @@
 
 #include "Grid.h"
 #include "Game.h"
+#include <cassert>
 
 Grid::Grid(int r, int c, int size) : rows(r), cols(c), cellSize(size)
 {
@@ -23,9 +24,21 @@ std::shared_ptr<Block> Grid::GetBlock(int x, int y)
     return grid[x][y].block;
 }
 
+void Grid::ClearBlock(int x, int y)
+{
+    assert(x >= 0 && x < cols);
+    assert(y >= 0 && y < rows);
+    grid[x][y].block = nullptr;
+}
+
 void Grid::SetBlock(int x, int y, std::shared_ptr<Block> block)
 {
+    assert(x >= 0 && x < cols);
+    assert(y >= 0 && y < rows);
     grid[x][y].block = block;
+    block->cellX = x;
+    block->cellY = y;
+    assert(GetBlock(x, y) == block);
 }
 
 void Grid::Draw()

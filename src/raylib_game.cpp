@@ -82,6 +82,9 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib gamejam template");
 
     // TODO: Load resources / Initialize variables at this point
+    // add water block to the grid
+    // grid.SetBlock(2, 3, std::make_shared<Water>(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize));
+
 
 
 
@@ -125,7 +128,7 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     // TODO: Update variables / Implement example logic at this point
     //----------------------------------------------------------------------------------
-    // handle mouse input to place water blocks
+    // handle mouse input to place obstacle blocks
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
     {
         int mouseX = GetMouseX();
@@ -141,12 +144,16 @@ void UpdateDrawFrame(void)
 
             if (!grid.GetBlock(col, row))
             {
-                // Place water block
-                auto block = std::make_shared<Water>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize);
+                // Place obstacle block
+                auto block = std::make_shared<Obstacle>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize);
                 grid.SetBlock(col, row, block);
                 
             }
-
+            else
+            {
+                // Remove block
+                grid.ClearBlock(col, row);
+            }
         }
     }
 
