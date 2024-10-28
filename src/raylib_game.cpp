@@ -57,7 +57,7 @@ typedef enum
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-
+static Grid grid;
 
 static RenderTexture2D target = {0}; // Render texture to render our game
 
@@ -82,6 +82,8 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib gamejam template");
 
     // TODO: Load resources / Initialize variables at this point
+
+
 
     // Render texture to draw full screen, enables screen scaling
     // NOTE: If screen is scaled, mouse input should be scaled proportionally
@@ -123,6 +125,25 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     // TODO: Update variables / Implement example logic at this point
     //----------------------------------------------------------------------------------
+    // handle mouse input to place water blocks
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        int mouseX = GetMouseX();
+        int mouseY = GetMouseY();
+        int startX = (screenWidth - grid.cols * grid.cellSize) / 2;
+        int startY = (screenHeight - grid.rows * grid.cellSize) / 2;
+
+        if (mouseX >= startX && mouseX < startX + grid.cols * grid.cellSize &&
+            mouseY >= startY && mouseY < startY + grid.rows * grid.cellSize)
+        {
+            const int col = (mouseX - startX) / grid.cellSize;
+            const int row = (mouseY - startY) / grid.cellSize;
+
+
+            // Place water block
+            grid.SetBlock(col, row, std::make_shared<Water>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize));
+        }
+    }
 
     // Draw
     //----------------------------------------------------------------------------------
@@ -147,9 +168,6 @@ void UpdateDrawFrame(void)
     // TODO: Draw everything that requires to be drawn at this point, maybe UI?
     DrawCircle(GetMouseX(), GetMouseY(), 5, RED);
 
-
-
-    Grid grid;
 
     grid.Draw();
 
@@ -180,12 +198,12 @@ void UpdateDrawFrame(void)
 
 
 
-    // Example usage
-    Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
-    Obstacle obstacleBlock(startX + 4 * grid.cellSize, startY + 5 * grid.cellSize, grid.cellSize);
+    // // Example usage
+    // Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
+    // Obstacle obstacleBlock(startX + 4 * grid.cellSize, startY + 5 * grid.cellSize, grid.cellSize);
 
-    waterBlock.Draw();
-    obstacleBlock.Draw();
+    // waterBlock.Draw();
+    // obstacleBlock.Draw();
 
     EndDrawing();
     //----------------------------------------------------------------------------------

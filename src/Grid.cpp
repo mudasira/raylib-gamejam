@@ -13,6 +13,9 @@ Grid::Grid(int r, int c, int size) : rows(r), cols(c), cellSize(size)
         }
         grid.push_back(row);
     }
+
+    startX = (screenWidth - cols * cellSize) / 2;
+    startY = (screenHeight - rows * cellSize) / 2;
 }
 
 std::shared_ptr<Block> Grid::GetBlock(int x, int y)
@@ -20,15 +23,13 @@ std::shared_ptr<Block> Grid::GetBlock(int x, int y)
     return grid[x][y].block;
 }
 
-void Grid::SetBlock(std::shared_ptr<Block> block)
+void Grid::SetBlock(int x, int y, std::shared_ptr<Block> block)
 {
-    grid[block->x][block->y].block = block;
+    grid[x][y].block = block;
 }
 
 void Grid::Draw()
 {
-    int startX = (screenWidth - cols * cellSize) / 2;
-    int startY = (screenHeight - rows * cellSize) / 2;
 
     for (int i = 0; i <= cols; i++)
     {
@@ -37,5 +38,17 @@ void Grid::Draw()
     for (int j = 0; j <= rows; j++)
     {
         DrawLine(startX, startY + j * cellSize, startX + cols * cellSize, startY + j * cellSize, LIGHTGRAY);
+    }
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            if (grid[j][i].block)
+            {
+
+                grid[j][i].block->Draw();
+            }
+        }
     }
 }
