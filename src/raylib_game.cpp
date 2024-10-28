@@ -24,6 +24,9 @@
 
 #include "Grid.h"
 #include "Game.h"
+#include "Block.h"
+#include "Crowd.h"
+#include "Obstacle.h"
 
 //----------------------------------------------------------------------------------
 // Defines and Macros
@@ -54,7 +57,7 @@ typedef enum
 //----------------------------------------------------------------------------------
 // Global Variables Definition
 //----------------------------------------------------------------------------------
-
+static Grid grid;
 
 static RenderTexture2D target = {0}; // Render texture to render our game
 
@@ -79,6 +82,11 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "raylib gamejam template");
 
     // TODO: Load resources / Initialize variables at this point
+    // add water block to the grid
+    // grid.SetBlock(2, 3, std::make_shared<Water>(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize));
+
+
+
 
     // Render texture to draw full screen, enables screen scaling
     // NOTE: If screen is scaled, mouse input should be scaled proportionally
@@ -120,6 +128,34 @@ void UpdateDrawFrame(void)
     //----------------------------------------------------------------------------------
     // TODO: Update variables / Implement example logic at this point
     //----------------------------------------------------------------------------------
+    // handle mouse input to place obstacle blocks
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    {
+        int mouseX = GetMouseX();
+        int mouseY = GetMouseY();
+        int startX = (screenWidth - grid.cols * grid.cellSize) / 2;
+        int startY = (screenHeight - grid.rows * grid.cellSize) / 2;
+
+        if (mouseX >= startX && mouseX < startX + grid.cols * grid.cellSize &&
+            mouseY >= startY && mouseY < startY + grid.rows * grid.cellSize)
+        {
+            const int col = (mouseX - startX) / grid.cellSize;
+            const int row = (mouseY - startY) / grid.cellSize;
+
+            if (!grid.GetBlock(col, row))
+            {
+                // Place obstacle block
+                auto block = std::make_shared<Obstacle>(startX + col * grid.cellSize, startY + row * grid.cellSize, grid.cellSize);
+                grid.SetBlock(col, row, block);
+                
+            }
+            else
+            {
+                // Remove block
+                grid.ClearBlock(col, row);
+            }
+        }
+    }
 
     // Draw
     //----------------------------------------------------------------------------------
@@ -145,9 +181,6 @@ void UpdateDrawFrame(void)
     DrawCircle(GetMouseX(), GetMouseY(), 5, RED);
 
 
-
-    Grid grid;
-
     grid.Draw();
 
     // Highlight the box that the mouse is inside
@@ -171,51 +204,18 @@ void UpdateDrawFrame(void)
         DrawText(text, startX + col * grid.cellSize + 5, startY + row * grid.cellSize + 5, 20, BLACK);
     }
 
-    class Block
-    {
-    public:
-        int x, y;
-        int size;
-        Color color;
 
-        Block(int x, int y, int size, Color color) : x(x), y(y), size(size), color(color) {}
 
-        virtual void Draw()
-        {
-            DrawRectangle(x, y, size, size, color);
-        }
-    };
 
-    class Water : public Block
-    {
-    public:
-        Water(int x, int y, int size) : Block(x, y, size, BLUE) {}
 
-        void Draw() override
-        {
-            Block::Draw();
-            // Additional drawing logic for Water if needed
-        }
-    };
 
-    class Obstacle : public Block
-    {
-    public:
-        Obstacle(int x, int y, int size) : Block(x, y, size, GRAY) {}
 
-        void Draw() override
-        {
-            Block::Draw();
-            // Additional drawing logic for Obstacle if needed
-        }
-    };
+    // // Example usage
+    // Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
+    // Obstacle obstacleBlock(startX + 4 * grid.cellSize, startY + 5 * grid.cellSize, grid.cellSize);
 
-    // Example usage
-    Water waterBlock(startX + 2 * grid.cellSize, startY + 3 * grid.cellSize, grid.cellSize);
-    Obstacle obstacleBlock(startX + 4 * grid.cellSize, startY + 5 * grid.cellSize, grid.cellSize);
-
-    waterBlock.Draw();
-    obstacleBlock.Draw();
+    // waterBlock.Draw();
+    // obstacleBlock.Draw();
 
     EndDrawing();
     //----------------------------------------------------------------------------------
